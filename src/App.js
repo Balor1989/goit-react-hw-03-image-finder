@@ -36,7 +36,7 @@ class App extends Component {
         <ToastContainer />
 
         <Searchbar formSubmit={this.handleFormSubmit} />
-        <ImageGallery>
+        <ImageGallery values={this.state.searchValue}>
           <h2>Gallery</h2>
           <ImageGalleryItem />
         </ImageGallery>
