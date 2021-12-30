@@ -9,6 +9,10 @@ class App extends Component {
     pictures:null
   }
 
+  handleFormSubmit = searchValue => {
+    console.log(searchValue)
+  }
+
   async componentDidMount() {
     try {
      const response = await axios.get('https://pixabay.com/api/?q=cat&page=1&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12')
@@ -25,7 +29,7 @@ class App extends Component {
     return (
       <>
       <h1>Hello!</h1>
-        <Searchbar />
+        <Searchbar formSubmit={this.handleFormSubmit} />
         </>
     )
   }
