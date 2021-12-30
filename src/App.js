@@ -1,5 +1,6 @@
 import { Component } from "react/cjs/react.production.min";
 import axios from "axios";
+import Searchbar from "./Searchbar/Searchbar";
 
 
 class App extends Component {
@@ -22,7 +23,10 @@ class App extends Component {
 
   render() {
     return (
+      <>
       <h1>Hello!</h1>
+        <Searchbar />
+        </>
     )
   }
 }
