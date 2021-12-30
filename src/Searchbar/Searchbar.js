@@ -27,18 +27,25 @@ class Searchbar extends Component {
 
     render() {
         return (
-       
-            <form onSubmit={this.handleSubmit}>
-                <input type="text"
-                    placeholder="Search images"
-                    value={this.setState.searchValue}
-                onChange={this.handleChange}
-                />
-                <button type="submit">
-                    <FcSearch style={{ width: 25, height: 25 }} />
-                </button>
-            </form>
+            <header className="Searchbar">
+                <form className="SearchForm" onSubmit={this.handleSubmit}>
+                    <button type="submit" className="SearchForm-button">
+                        <FcSearch style={{ width: 25, height: 25 }} />
+                    </button>
+                    <input
+                        className="SearchForm-input"
+                        type="text"
+                        autocomplete="off"
+                        autofocus
+                        placeholder="Search images and photos"
+                        value={this.setState.searchValue}
+                        onChange={this.handleChange}
+                    />
+               
+                </form>
+            </header>
         );
     }
 }
 export default Searchbar
+

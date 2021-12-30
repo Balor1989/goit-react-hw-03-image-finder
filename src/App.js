@@ -3,13 +3,14 @@ import axios from "axios";
 import Searchbar from "./Searchbar/Searchbar";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ImageGallery from "./ImageGallery/ImageGallery";
+import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 
 
 class App extends Component {
 
   state = {
     searchValue: '',
-    pictures: null
   };
 
   handleFormSubmit = value => {
@@ -35,6 +36,10 @@ class App extends Component {
         <ToastContainer />
 
         <Searchbar formSubmit={this.handleFormSubmit} />
+        <ImageGallery>
+          <h2>Gallery</h2>
+          <ImageGalleryItem />
+        </ImageGallery>
         </>
     )
   }
