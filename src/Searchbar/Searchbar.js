@@ -1,5 +1,6 @@
 import { Component } from "react/cjs/react.production.min";
-import { FcSearch} from 'react-icons/fc';
+import { FcSearch } from 'react-icons/fc';
+import {toast} from 'react-toastify';
 
 
 
@@ -13,10 +14,15 @@ class Searchbar extends Component {
         this.setState({searchValue: e.currentTarget.value })
     }
     handleSubmit = (e) => {
+        const {searchValue} = this.state
         e.preventDefault()
         console.log("submit")
-        this.props.formSubmit(this.state.searchValue)
-        this.setState({ searchValue: "" });
+        if (!searchValue.trim()) {
+            toast.warn('Please enter what are you looking for')
+            return
+        }
+        this.props.formSubmit(searchValue)
+        // this.setState({ searchValue: "" });
     }
 
     render() {

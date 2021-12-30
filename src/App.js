@@ -1,17 +1,20 @@
 import { Component } from "react/cjs/react.production.min";
 import axios from "axios";
 import Searchbar from "./Searchbar/Searchbar";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class App extends Component {
 
   state = {
-    pictures:null
-  }
+    searchValue: '',
+    pictures: null
+  };
 
-  handleFormSubmit = searchValue => {
-    console.log(searchValue)
-  }
+  handleFormSubmit = value => {
+    this.setState({ searchValue: value })
+  };
 
   async componentDidMount() {
     try {
@@ -28,7 +31,9 @@ class App extends Component {
   render() {
     return (
       <>
-      <h1>Hello!</h1>
+        <h1>Hello!</h1>
+        <ToastContainer />
+
         <Searchbar formSubmit={this.handleFormSubmit} />
         </>
     )
