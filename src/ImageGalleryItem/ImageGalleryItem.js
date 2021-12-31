@@ -1,4 +1,4 @@
-
+import propTypes from "prop-types";
 
 const ImageGalleryItem = ({ images, onGetImage }) => (
     <>
@@ -12,3 +12,8 @@ const ImageGalleryItem = ({ images, onGetImage }) => (
 );
 
 export default ImageGalleryItem
+
+ImageGalleryItem.propTypes = {
+    images: propTypes.array,
+    onGetImage: propTypes.func
+}

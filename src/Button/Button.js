@@ -1,3 +1,4 @@
+import propTypes from "prop-types";
 
 const Button = ({onHandleClickLoadMore}) => (
     <div className="button-box">
@@ -6,3 +7,7 @@ const Button = ({onHandleClickLoadMore}) => (
 );
 
 export default Button
+
+Button.propTypes = {
+    onHandleClickLoadMore: propTypes.func
+}

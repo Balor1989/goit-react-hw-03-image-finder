@@ -24,15 +24,16 @@ class App extends Component {
 
 componentDidUpdate(prevProps, prevState) {
 
-    if (prevState.searchValue !== this.state.searchValue) {
+      if (prevState.searchValue !== this.state.searchValue) {
       this.setState({ page: 1, arrayOfImages: [], visible: true })
-      this.fetch()    
+        this.fetch()   
+      return  
    };
 
-    if (prevState.page !== this.state.page) {
-      this.fetch()
-   };    
-  };
+      if (prevState.page !== this.state.page) {
+          this.fetch()
+      }    
+      };
 
 
   async fetch() {
@@ -70,7 +71,7 @@ componentDidUpdate(prevProps, prevState) {
   };
 
   
-  handleClickLoadMore = (e) => {
+  handleClickLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }))
   };
 
@@ -89,21 +90,22 @@ componentDidUpdate(prevProps, prevState) {
   };
 
   render() {
+    const {arrayOfImages, visible, showModal,modalImage,modalTag} = this.state
     return (
       <>
         <ToastContainer />
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
-          <ImageGalleryItem images={this.state.arrayOfImages}
+          <ImageGalleryItem images={arrayOfImages}
             onGetImage={this.getImageforModal}
 
           />
         </ImageGallery>
-        {this.state.visible && <Button
+        {visible && <Button
           onHandleClickLoadMore={this.handleClickLoadMore} />}
-        {this.state.showModal &&
+        {showModal &&
           <Modal onClose={this.toggleModal}>
-            <img src={this.state.modalImage} alt="" />
+            <img src={modalImage} alt={modalTag} />
           </Modal>}
       </>
     )
