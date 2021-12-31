@@ -37,13 +37,14 @@ class App extends Component {
         arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
       }));
 
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: "smooth",
-      });
-
       if (this.state.arrayOfImages.length === pictures.totalHits) {
         this.setState({ visible: false})
+      }
+      if (this.state.page > 1) {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
       }
     }
     catch (error) {
@@ -70,7 +71,8 @@ class App extends Component {
    };
 
     if (prevState.page !== this.state.page) {
-     this.fetch()
+      this.fetch()
+
    };
      
   };
@@ -78,17 +80,15 @@ class App extends Component {
   render() {
     return (
       <>
-        <h1>Hello!</h1>
         <ToastContainer />
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
-          <h2>Gallery</h2>
-          <ImageGalleryItem images={this.state.arrayOfImages}/>
+          <ImageGalleryItem images={this.state.arrayOfImages} />
         </ImageGallery>
         {this.state.visible && <Button onHandleClickLoadMore={this.handleClickLoadMore} />}
         {this.state.modal && <Modal />}
-        </>
-    )
+      </>
+    );
   }
 }
 
