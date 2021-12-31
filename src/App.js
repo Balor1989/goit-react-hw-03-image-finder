@@ -25,7 +25,7 @@ class App extends Component {
     try {
       const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=${this.state.page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
       const pictures = await response.data
-      
+        
       if (pictures.totalHits === 0) {
         toast.info('No pictures found for your request')
         return
@@ -33,6 +33,9 @@ class App extends Component {
       this.setState(prevState => ({
         arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
       }));
+      if (this.state.arrayOfImages.length === pictures.totalHits) {
+        this.setState({ visible: false})
+      }
     }
     catch (error) {
       console.log(error);
