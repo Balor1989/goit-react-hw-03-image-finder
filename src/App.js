@@ -1,5 +1,4 @@
 import { Component } from "react/cjs/react.production.min";
-
 import Searchbar from "./Searchbar/Searchbar";
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +7,7 @@ import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 import axios from "axios";
 import Button from "./Button/Button";
 import Loading from "./plugins/loading";
+import Modal from "./Modal/Modal";
 
 
 class App extends Component {
@@ -16,7 +16,8 @@ class App extends Component {
     searchValue: '',
     arrayOfImages: [],
     page: 1,
-    visible:false
+    visible: false,
+    modal: false
   };
 
   async fetch() {
@@ -85,6 +86,7 @@ class App extends Component {
           <ImageGalleryItem images={this.state.arrayOfImages}/>
         </ImageGallery>
         {this.state.visible && <Button onHandleClickLoadMore={this.handleClickLoadMore} />}
+        {this.state.modal && <Modal />}
         </>
     )
   }
