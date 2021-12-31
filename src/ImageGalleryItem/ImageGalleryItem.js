@@ -1,9 +1,9 @@
 
 
-const ImageGalleryItem = ({ images,onToggleModal }) => (
+const ImageGalleryItem = ({ images, onGetImage }) => (
     <>
         {images.map(image => (
-            <li className="ImageGalleryItem" key={image.id} onClick={onToggleModal}>
+            <li className="ImageGalleryItem" key={image.id} onClick={() => onGetImage( image.largeImageURL, image.tags )}>
                 <img src={image.webformatURL} alt={image.tags} className="ImageGalleryItem-image" />
             </li>
         ))}

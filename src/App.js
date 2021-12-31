@@ -17,7 +17,9 @@ class App extends Component {
     arrayOfImages: [],
     page: 1,
     visible: false,
-    showModal: false
+    showModal: false,
+    modalImage: null,
+    modalTag:null
   };
 
 componentDidUpdate(prevProps, prevState) {
@@ -81,6 +83,10 @@ componentDidUpdate(prevProps, prevState) {
     this.setState(({showModal}) =>({ showModal: !showModal })
     )
   }
+  getImageforModal = (image, tag) => {
+    this.toggleModal()
+    this.setState({ modalImage: image, modalTag: tag });
+  };
 
   render() {
     return (
@@ -89,14 +95,15 @@ componentDidUpdate(prevProps, prevState) {
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
           <ImageGalleryItem images={this.state.arrayOfImages}
-            onToggleModal={this.toggleModal}
+            onGetImage={this.getImageforModal}
+
           />
         </ImageGallery>
         {this.state.visible && <Button
           onHandleClickLoadMore={this.handleClickLoadMore} />}
         {this.state.showModal &&
           <Modal onClose={this.toggleModal}>
-            <img src="https://cdn.pixabay.com/photo/2019/12/01/18/26/celebration-4666137__340.jpg" alt="" />
+            <img src={this.state.modalImage} alt="" />
           </Modal>}
       </>
     )
