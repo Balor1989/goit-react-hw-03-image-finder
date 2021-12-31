@@ -12,27 +12,30 @@ class App extends Component {
 
   state = {
     searchValue: '',
-    arrayOfImages:[]
+    arrayOfImages: [],
+    page: 1
   };
 
   handleClickLoadMore = (e) => {
-   console.log("Load more")
- }
+    this.setState(prevState => ({ page: prevState.page + 1 }))
+  };
 
   handleFormSubmit = value => {
     this.setState({ searchValue: value })
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+ async componentDidUpdate(prevProps, prevState) {
+
     if (prevState.searchValue !== this.state.searchValue) {
-        try {
-            const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=1&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
+       this.setState({page: 1})
+      try {
+            const response =await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=${this.state.page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
           const pictures = await response.data
           if (pictures.totalHits === 0) {
             toast.info('No pictures found for your request')
             return
                 }
-            this.setState((prevState) => ({
+            this.setState(prevState => ({
             arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
           }));
           }
@@ -41,7 +44,25 @@ class App extends Component {
             return Promise.reject(error);
         }
       
-    };
+   };
+    if (prevState.page !== this.state.page) {
+     try {
+          const response =await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=${this.state.page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
+          const pictures = await response.data
+          if (pictures.totalHits === 0) {
+            toast.info('No pictures found for your request')
+            return
+                }
+            this.setState(prevState => ({
+            arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
+          }));
+          }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+   };
+     
   };
 
   render() {
@@ -49,7 +70,6 @@ class App extends Component {
       <>
         <h1>Hello!</h1>
         <ToastContainer />
-
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
           <h2>Gallery</h2>
