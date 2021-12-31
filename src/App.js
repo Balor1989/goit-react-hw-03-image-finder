@@ -11,7 +11,8 @@ class App extends Component {
 
   state = {
     searchValue: '',
-    pictures: null
+    pictures: null,
+    arrayOfImages:[]
   };
 
   handleFormSubmit = value => {
@@ -19,17 +20,21 @@ class App extends Component {
   };
    async componentDidUpdate(prevProps, prevState) {
      if (prevState.searchValue !== this.state.searchValue) {
-          console.log("111")
           try {
               const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=1&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
-              const pictures = await response.data
+            const pictures = await response.data
+
+              this.setState((prevState) => ({
+              arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
+            }));
               return this.setState({ pictures })
             }
           catch (error) {
               console.log(error);
               return Promise.reject(error);
-            }
-        };
+          }
+       
+     };
     };
 
   render() {
@@ -41,7 +46,7 @@ class App extends Component {
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
           <h2>Gallery</h2>
-          <ImageGalleryItem />
+          <ImageGalleryItem images={this.state.arrayOfImages}/>
         </ImageGallery>
         </>
     )
