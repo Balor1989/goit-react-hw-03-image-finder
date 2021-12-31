@@ -1,4 +1,5 @@
 import { Component } from "react/cjs/react.production.min";
+
 import Searchbar from "./Searchbar/Searchbar";
 import { ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,6 +7,7 @@ import ImageGallery from "./ImageGallery/ImageGallery";
 import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 import axios from "axios";
 import Button from "./Button/Button";
+import Loading from "./plugins/loading";
 
 
 class App extends Component {
@@ -19,15 +21,17 @@ class App extends Component {
 
   async fetch() {
     try {
+      Loading.circle()
       const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=${this.state.page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
       const pictures = await response.data
         
       if (pictures.totalHits === 0) {
         this.setState({ visible: false})
         toast.info('No pictures found for your request')
+        Loading.remove()
         return
       }
-      
+
       this.setState(prevState => ({
         arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
       }));
@@ -45,6 +49,7 @@ class App extends Component {
       console.log(error);
       return Promise.reject(error);
     }
+    Loading.remove()
   };
 
   
