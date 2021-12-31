@@ -17,8 +17,21 @@ class App extends Component {
     arrayOfImages: [],
     page: 1,
     visible: false,
-    modal: false
+    showModal: false
   };
+
+componentDidUpdate(prevProps, prevState) {
+
+    if (prevState.searchValue !== this.state.searchValue) {
+      this.setState({ page: 1, arrayOfImages: [], visible: true })
+      this.fetch()    
+   };
+
+    if (prevState.page !== this.state.page) {
+      this.fetch()
+   };    
+  };
+
 
   async fetch() {
     try {
@@ -63,19 +76,11 @@ class App extends Component {
     this.setState({ searchValue: value })
   };
 
- componentDidUpdate(prevProps, prevState) {
-
-    if (prevState.searchValue !== this.state.searchValue) {
-      this.setState({ page: 1, arrayOfImages: [], visible: true })
-      this.fetch()    
-   };
-
-    if (prevState.page !== this.state.page) {
-      this.fetch()
-
-   };
-     
-  };
+ 
+  toggleModal = () => {
+    this.setState(({showModal}) =>({ showModal: !showModal })
+    )
+  }
 
   render() {
     return (
@@ -83,12 +88,18 @@ class App extends Component {
         <ToastContainer />
         <Searchbar formSubmit={this.handleFormSubmit} />
         <ImageGallery >
-          <ImageGalleryItem images={this.state.arrayOfImages} />
+          <ImageGalleryItem images={this.state.arrayOfImages}
+            onToggleModal={this.toggleModal}
+          />
         </ImageGallery>
-        {this.state.visible && <Button onHandleClickLoadMore={this.handleClickLoadMore} />}
-        {this.state.modal && <Modal />}
+        {this.state.visible && <Button
+          onHandleClickLoadMore={this.handleClickLoadMore} />}
+        {this.state.showModal &&
+          <Modal onClose={this.toggleModal}>
+            <img src="https://cdn.pixabay.com/photo/2019/12/01/18/26/celebration-4666137__340.jpg" alt="" />
+          </Modal>}
       </>
-    );
+    )
   }
 }
 

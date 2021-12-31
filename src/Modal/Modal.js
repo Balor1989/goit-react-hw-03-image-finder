@@ -1,12 +1,36 @@
+import { Component } from "react/cjs/react.production.min";
+import { createPortal } from "react-dom";
 
- 
-const Modal = () => (
-    <div className="Overlay">
+const modalRoot = document.querySelector('#modal-root');
+class Modal extends Component {
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown)
+  };
+  
+  componentWillUnmount() {
+  window.removeEventListener('keydown', this.handleKeyDown)
+}
+
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose()
+    }
+  }
+  handleOverlayClick = e => {
+    if (e.target === e.currentTarget) {
+    this.props.onClose()
+  }
+  }
+  
+  render() {
+    return createPortal (
+      <div className="Overlay" onClick={this.handleOverlayClick}>
         <div className="Modal">
-            <h3>Show modal</h3>
-    <img src="" alt="" />
-  </div>
-</div>
-)
-
+          {this.props.children}
+        </div>
+      </div>, modalRoot
+    )
+  }
+}
 export default Modal
