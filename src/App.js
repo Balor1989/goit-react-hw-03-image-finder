@@ -27,19 +27,19 @@ componentDidUpdate(prevProps, prevState) {
       if (prevState.searchValue !== this.state.searchValue) {
       this.setState({ page: 1, arrayOfImages: [], visible: true })
         this.fetch()   
-      return  
    };
 
-      if (prevState.page !== this.state.page) {
-          this.fetch()
+      if (prevState.searchValue === this.state.searchValue && prevState.page !== this.state.page) {
+        this.fetch()
       }    
       };
 
 
   async fetch() {
+    const{searchValue, page, arrayOfImages} = this.state
     try {
       Loading.circle()
-      const response = await axios.get(`https://pixabay.com/api/?q=${this.state.searchValue}&page=${this.state.page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
+      const response = await axios.get(`https://pixabay.com/api/?q=${searchValue}&page=${page}&key=23825879-78d35eabdb1bf9c22a9a5e768&image_type=photo&orientation=horizontal&per_page=12`)
       const pictures = await response.data
         
       if (pictures.totalHits === 0) {
@@ -48,15 +48,22 @@ componentDidUpdate(prevProps, prevState) {
         Loading.remove()
         return
       }
-
-      this.setState(prevState => ({
-        arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
-      }));
-
-      if (this.state.arrayOfImages.length === pictures.totalHits) {
-        this.setState({ visible: false})
+      if (page === 1) {
+        this.setState({
+          arrayOfImages: [...pictures.hits]
+        })
       }
-      if (this.state.page > 1) {
+    
+
+      if (arrayOfImages.length === pictures.totalHits) {
+        this.setState({ visible: false})
+      };
+
+      if (page > 1) {
+        this.setState(prevState => ({
+        arrayOfImages: [...prevState.arrayOfImages, ...pictures.hits],
+        }));
+        
         window.scrollTo({
           top: document.documentElement.scrollHeight,
           behavior: "smooth",
