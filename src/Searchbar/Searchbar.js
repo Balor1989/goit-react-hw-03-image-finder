@@ -22,7 +22,6 @@ class Searchbar extends Component {
             return
         }
         this.props.formSubmit(searchValue)
-        // this.setState({ searchValue: "" });
     }
 
     render() {
@@ -47,5 +46,6 @@ class Searchbar extends Component {
         );
     }
 }
+
 export default Searchbar
 
