@@ -1,17 +1,9 @@
-import { Component } from "react/cjs/react.production.min";
-
+import { Component } from 'react/cjs/react.production.min';
 
 class ImageGallery extends Component {
+  render() {
+    return <ul className="ImageGallery">{this.props.children}</ul>;
+  }
+}
 
-
-
-    render() {
-        return (
-            <ul className="ImageGallery">
-                {this.props.children}
-            </ul>
-        )
-    };
-};
-
-export default ImageGallery
+export default ImageGallery;
