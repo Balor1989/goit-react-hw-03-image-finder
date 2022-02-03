@@ -4,12 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
-import axios from 'axios';
 import Button from './components/Button/Button';
 import Loading from './utils/loading';
 import Modal from './components/Modal/Modal';
-
-const API_KEY = '23825879-78d35eabdb1bf9c22a9a5e768';
+import findImages from './services/services';
 
 class App extends Component {
   state = {
@@ -40,10 +38,7 @@ class App extends Component {
     const { searchValue, page, arrayOfImages } = this.state;
     try {
       Loading.circle();
-      const response = await axios.get(
-        `https://pixabay.com/api/?q=${searchValue}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`,
-      );
-      const pictures = await response.data;
+      let pictures = await findImages(searchValue, page);
 
       if (pictures.totalHits === 0) {
         this.setState({ visible: false });
@@ -72,7 +67,8 @@ class App extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
+      toast.error('Something wrong');
+      Loading.remove();
       return Promise.reject(error);
     }
     Loading.remove();
