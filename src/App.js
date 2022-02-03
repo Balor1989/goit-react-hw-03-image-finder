@@ -1,13 +1,13 @@
 import { Component } from 'react/cjs/react.production.min';
-import Searchbar from './Searchbar/Searchbar';
+import Searchbar from './components/Searchbar/Searchbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ImageGallery from './ImageGallery/ImageGallery';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import ImageGalleryItem from './components/ImageGalleryItem/ImageGalleryItem';
 import axios from 'axios';
-import Button from './Button/Button';
-import Loading from './plugins/loading';
-import Modal from './Modal/Modal';
+import Button from './components/Button/Button';
+import Loading from './utils/loading';
+import Modal from './components/Modal/Modal';
 
 const API_KEY = '23825879-78d35eabdb1bf9c22a9a5e768';
 
